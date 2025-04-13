@@ -1,0 +1,174 @@
+<script>
+
+var CampoNome = document.getElementById("Nome");
+var CampoItem = document.getElementById("Item");
+var CampoEspec = document.getElementById("Espec");
+var CampoMotivo = document.getElementById("Motivo");
+var CampoEixo = document.getElementById("ListaEixo");
+var CampoStatus = document.getElementById("ListaStatus");
+var CampoQuantidade = document.getElementById("Quantidade");
+var CampoValor = document.getElementById("Valor");
+var CampoPesquisa = document.getElementById("Pesquisa");
+
+var CaixaMsg = document.getElementById("CaixaMsg");
+var TituloMsg = document.getElementById("TituloMsg");
+var CorpoMsg = document.getElementById("CorpoMsg");
+var RodapeMsg = document.getElementById("RodapeMsg");
+
+var CaixaPesquisa = document.getElementById("CaixaPesquisa");
+var TituloPesquisa = document.getElementById("TituloPesquisa");
+var CorpoPesquisa = document.getElementById("CorpoPesquisa");
+var RodapePesquisa = document.getElementById("RodapePesquisa");
+
+////-----------------------------FUNÇÕES CAIXA DE MENSAGEM-------------------------------////////
+
+var BtnFechar = '<button class = "purple" onclick="Fechar()" style="cursor:pointer">'+
+'<b><font color="black" size="3px">Fechar</font></b></button>';
+
+function caixaMsgbox(m){
+  CaixaMsg.style.display = "block";
+  TituloMsg.innerHTML = "AVISO";
+  CorpoMsg.innerHTML = m;
+  RodapeMsg.innerHTML = BtnFechar;
+}
+
+function Fechar(){
+  CaixaMsg.style.display = "none";
+}
+
+///----------------------------------FUNÇÕES LIMPAR----------------------------------/////
+
+document.getElementById("btnLimpar").addEventListener("click", Limpar);
+
+function Limpar(){
+  CampoNome.value="";
+  CampoItem.value="";
+  CampoEspec.value="";
+  CampoMotivo.value="";
+  CampoEixo.value="";
+  CampoStatus.value="";
+  CampoQuantidade.value="";
+  CampoValor.value="";
+  M.updateTextFields();
+  CampoLista.value="";
+}
+
+//---------------------------------FUNÇÕES ADICIONAR------------------------------------///////
+
+document.getElementById("btnAdicionar").addEventListener("click", Adicionar);
+
+function Adicionar(){
+
+  var Nome = CampoNome.value;
+  var Item = CampoItem.value;
+  var Espec = CampoEspec.value;
+  var Motivo = CampoMotivo.value;
+  var Eixo = CampoEixo.value;
+  var Status = CampoStatus.value;
+  var Quantidade = CampoQuantidade.value;
+  var Valor = CampoValor.value;
+
+  var Nome = Nome.trim();
+
+  if(Nome=="" || Item=="" || Motivo=="" || Quantidade=="" || Valor==""){
+    var m = "Preencha todos os campos obrigatórios.";
+    caixaMsgbox(m);
+    return;
+  }
+
+  var Dados = {
+    Nome: Nome,
+    Item: Item,
+    Espec: Espec,
+    Motivo: Motivo,
+    Eixo: Eixo,
+    Status: Status,
+    Quantidade: Quantidade,
+    Valor: Valor
+  }
+
+  google.script.run.withSuccessHandler(Retorno).AdicionarItem(Dados);
+
+  function Retorno(r){
+
+    if(r == "VENDEDOR JÁ CADASTRADO!"){
+      var m = r;
+      caixaMsgbox(m);
+    }
+
+    if(r == "REGISTRADO COM SUCESSO!"){
+      var m = r;
+      caixaMsgbox(m);
+      Limpar();
+    } 
+  }
+}
+
+//----------------------------FUNÇÕES CAIXA DE RESULTADOS DE PESQUISA------------------------------------------///
+
+var BtnFechar2 = '<button class = "purple" onclick="Fechar2()" style="cursor:pointer">'+
+'<b><font color="white" size="3px">Fechar</font></b></button>';
+
+var BtnSelecionar2 = '<button class = "purple" onclick="Fechar2()" style="cursor:pointer">'+
+'<b><font color="white" size="3px">Selecionar</font></b></button>';
+
+function Fechar2(){
+  CaixaPesquisa.style.display = "none";
+}
+
+function caixaPesquisa(resultados) {
+
+  CaixaPesquisa.style.display = "block";
+  TituloPesquisa.innerHTML = "Resultados da Pesquisa";
+
+  if (resultados.length == 0) {
+    CorpoPesquisa.innerHTML = "<p>Nenhum resultado encontrado.</p>";
+    RodapePesquisa.innerHTML = BtnFechar2+BtnSelecionar2;
+    return;
+  }
+
+  var listaHTML = '<select class="browser-default" style="border: 1px solid #808080"><option value="" disabled selected>Selecione um dos resultados</option>';
+
+  for(var i=0; i<resultados.length; i++){
+    var texto='<option>'+resultados[i]+'</option>';
+
+    listaHTML += '<option>'+texto+'</option>';
+  }
+
+  listaHTML += '</select>';
+
+  CorpoPesquisa.innerHTML = listaHTML;
+  RodapePesquisa.innerHTML = BtnFechar2+BtnSelecionar2;
+}
+
+////--------------------------FUNÇÕES PESQUISAR--------------------------------/////
+
+document.getElementById("btnPesquisar").addEventListener("click", Pesquisar);
+
+function Pesquisar(){
+  var termo = CampoPesquisa.value;
+  google.script.run.withSuccessHandler(caixaPesquisa).buscarItens(termo);
+}
+  
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
