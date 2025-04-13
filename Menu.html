@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+
+    <?!=Chamar("EstiloMenu")?>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  </head>
+  <body>
+
+    <div id="CaixaMsg">
+      <div>
+        <div id="TituloMsg"></div>
+        <div id="CorpoMsg"></div>
+        <div id="RodapeMsg"></div>
+      </div>
+    </div>
+
+    <div id="CaixaPesquisa">
+      <div>
+        <div id="TituloPesquisa"></div>
+        <div id="CorpoPesquisa">
+        </div>
+        <div id="RodapePesquisa"></div>
+      </div>
+    </div>
+
+    <div id="divPesquisa" class="row">
+
+      <div id="BordaPesquisa">
+        <input id="Pesquisa" type = "search" placeholder="Pesquise por um item ...">
+      </div>
+
+      <button id = "btnPesquisar" class = "btn waves-effect waves-light purple">
+        <i class = "material-icons right">search</i>
+      </button>
+
+      <button id = "btnAjuda" class = "btn-floating btn-medium waves-effect waves-light grey">
+        <i class = "material-icons right">help</i>
+      </button>
+
+    </div>
+
+    <div id="divCampos" class="row">
+    
+      <div id="divNome" class = "input-field col s12">
+        <i id="iconeNome" class = "material-icons prefix">person_outline</i>
+        <input id="Nome" type = "text">
+        <label id = "labelNome" for = "Nome">Nome do Solicitante <span style="color: red;">*</span></label>
+      </div>
+
+      <div id="divItem" class = "input-field col s12">
+        <i id="iconeItem" class = "material-icons prefix">build</i>
+        <input id="Item" type = "text">
+        <label id = "labelItem" for = "Item">Item <span style="color: red;">*</span></label>
+      </div>
+
+      <div id="divEspec" class = "input-field col s12">
+        <i id="iconeEspec" class = "material-icons prefix">format_list_bulleted</i>
+        <input id="Espec" type = "text">
+        <label id = "labelEspec" for = "Espec">Especificações</label>
+      </div>
+
+      <div id="divMotivo" class = "input-field col s12">
+        <i id="iconeMotivo" class = "material-icons prefix">insert_comment</i>
+        <input id="Motivo" type = "text">
+        <label id = "labelMotivo" for = "Motivo">Motivo <span style="color: red;">*</span></label>
+      </div>
+
+      <div id="divQuantidade" class = "input-field col s12">
+        <i id="iconeQuantidade" class = "material-icons prefix">shopping_cart</i>
+        <input id = "Quantidade" type="number" min="0">
+        <label id = "labelQuantidade" for="Quantidade">Quantidade <span style="color: red;">*</span></label>
+      </div>
+
+      <div id="divValor" class = "input-field col s12">
+        <i id="iconeValor" class = "material-icons prefix">attach_money</i>
+        <input id="Valor" type = "number">
+        <label id = "labelValor" for = "Valor">Valor Unitário <span style="color: red;">*</span></label>
+      </div>
+
+      <div id="divEixo">
+        <select id="ListaEixo" class="browser-default">
+          <option value="" disabled selected>Eixo/Time</option>
+          <option>-</option>
+          <option>Apoio</option>
+          <option>Inovação</option>
+          <option>Técnico</option>
+        </select>
+      </div>
+
+      <div id="divStatus">
+        <select id="ListaStatus" class="browser-default">
+          <option value="" disabled selected>Status da compra</option>
+          <option>-</option>
+          <option>Pendente</option>
+          <option>Não Autorizado</option>
+        </select>
+      </div>
+
+      <div id="divBotoes" class = "input-field col s12">
+
+        <button id = "btnLimpar" class = "btn waves-effect waves-light purple">LIMPAR
+          <i class = "material-icons left">backspace</i>
+        </button>
+
+        <button id = "btnAdicionar" class = "btn waves-effect waves-light purple">ADICIONAR
+          <i class = "material-icons left">add_circle_outline</i>
+        </button>
+
+        <button id = "btnEditar" class = "btn waves-effect waves-light purple">EDITAR
+          <i class = "material-icons left">edit</i>
+        </button>
+        <button id = "btnExcluir" class = "btn waves-effect waves-light purple">EXCLUIR
+          <i class = "material-icons left">delete</i>
+        </button>
+
+      </div>
+    
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <?!=Chamar("Menu-js")?>
+  </body>
+</html>
