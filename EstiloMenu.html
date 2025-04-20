@@ -51,7 +51,6 @@
   top: 10px;
 }
 
-
 #divEixo{
   position: absolute;
   //background-color: blue;
@@ -64,7 +63,7 @@
 #ListaEixo{
   position: absolute;
   border: 1px solid #808080;
-  top: 20px;
+  top: 15px;
   left: 10px;
   width: 210px;
   height: 30px;
@@ -72,7 +71,7 @@
 
 #divStatus{
   position: absolute;
-  //background-color: blue;
+  //background-color: yellow;
   top: 74px;
   left: 390px;
   width: 300px;
@@ -82,7 +81,7 @@
 #ListaStatus{
   position: absolute;
   border: 1px solid #808080;
-  top: 20px;
+  top: 15px;
   left: 10px;
   width: 210px;
   height: 30px;
@@ -203,7 +202,7 @@
 
 #divQuantidade{
   position: absolute;
-  //background-color: red;
+  //background-color: blue;
   width: 300px;
   height: 60px;
   top: 120px;
@@ -290,7 +289,7 @@
 #CaixaMsg{
   display: none;
   position: fixed;
-  background-color: #d373ff;
+  background-color: #db9eff;
   border: 2px solid #808080;
   width: 330px;
   left: 150px;
@@ -305,7 +304,7 @@
 }
 
 #CaixaMsg>div>#TituloMsg{
-  background-color: #d373ff;
+  background-color: #db9eff;
   font-size: 22px;
   padding: 10px;
   color: #000;
@@ -316,7 +315,7 @@
   font-size: 15px;
   padding: 15px;
   color: #000;
-  text-align: center;
+  text-align: left;
 }
 
 #CaixaMsg>div>#RodapeMsg{
@@ -328,13 +327,13 @@
 #CaixaPesquisa{
   display: none;
   position: absolute;
-  background-color: #d373ff;
+  background-color: #FFF;
   border: 2px solid #808080;
   width: 710px;
-  height: 200px;
+  height: 380px;
   left: 0px;
   top: 0px;
-  border-radius: 2px;
+  border-radius: 5px;
   z-index: 2;
 }
 
@@ -344,11 +343,11 @@
 }
 
 #CaixaPesquisa>div>#TituloPesquisa{
-  background-color: #d373ff;
+  background-color: #FFF;
   font-size: 18px;
   padding: 10px;
   color: #000;
-  height: 50px;
+  height: 40px;
 }
 
 #CaixaPesquisa>div>#CorpoPesquisa{
@@ -357,36 +356,166 @@
   padding: 15px;
   color: #000;
   text-align: center;
-  height: 70px;
+  height: 250px;
   top: 50px;
 }
 
 #CaixaPesquisa>div>#RodapePesquisa{
   //background-color: #4169E1;
-  padding: 10px;
+  position: absolute;
+  //padding: 10px;
   text-align: center;
+  height: 35px;
+  width: 705px;
+  top: 340px;
+  left: 0px;
+}
+
+#ListaResultados{
+  position: absolute;
+  border: 1px solid #808080;
+  height: 280px;
+  width: 708px;
+  left: 0px;
+  top: 50px;
+}
+
+#BtnFechar2{
+  position: absolute;
+  height: 25px;
+  width: 25px;
+  left: 670px;
+  top: 15px;
+}
+
+#IconeBtnFechar2{
+  position: absolute;
+  size: 5px;
+  top: -7px;
+  left: 0px;
+}
+
+#BtnSelecionar{
+  position: absolute;
+  left: 8px;
+  top: -3px;
+  height: 35px;
+  width: 150px;
+}
+
+#BtnInfo{
+  position: absolute;
+  left: 570px;
+  top: -3px;
+  height: 35px;
+  width: 130px;
+}
+
+#CaixaDetalhes{
+  display: none;
+  position: absolute;
+  background-color: #FFF;
+  border: 2px solid #808080;
+  width: 710px;
+  height: 380px;
+  left: 0px;
+  top: 0px;
+  border-radius: 5px;
+  z-index: 3;
+}
+
+#TituloDetalhes{
+  background-color: #FFF;
+  border: 2px solid #808080;
+  font-size: 18px;
+  padding: 10px;
+  color: #000;
+  height: 40px;
+}
+
+#CorpoDetalhes{
+  //background-color: #4169E1;
+  font-size: 15px;
+  padding: 15px;
+  color: #000;
+  text-align: left;
+  height: 240px;
+  top: 20px;
+}
+
+#RodapeDetalhes{
+  //background-color: #4169E1;
+  position: absolute;
+  text-align: center;
+  height: 45px;
+  width: 705px;
+  top: 330px;
+  left: 0px;
+}
+
+#CaixaExcluir{
+  display: none;
+  position: fixed;
+  background-color: #db9eff;
+  border: 2px solid #808080;
+  width: 235px;
+  left: 250px;
+  top: 0px;
+  border-radius: 2px;
+  z-index: 1;
+}
+
+#CaixaExcluir>div{
+  background-color: #FFF;
+  margin: 6px;
+}
+
+#TituloExcluir{
+  background-color: #db9eff;
+  font-size: 22px;
+  padding: 10px;
+  color: #000;
+}
+
+#CorpoExcluir{
+  //background-color: #4169E1;
+  font-size: 15px;
+  padding: 15px;
+  color: #000;
+  text-align: left;
+}
+
+#RodapeExcluir{
+  background-color: #FFF;
+  padding: 10px;
+  text-align: left;
   height: 50px;
-  top: 120px;
+}
+
+#BtnNao{
+  position: absolute;
+  left: 30px;
+  top: 135px;
+}
+
+#BtnSim{
+  position: absolute;
+  left: 135px;
+  top: 135px;
+}
+
+#BtnFechar3{
+  position: absolute;
+  top: 0px;
+  width: 100px;
+  left: 590px;
+}
+
+#IconeBtnFechar3{
+  position: absolute;
+  size: 5px;
+  top: -7px;
+  left: 0px;
 }
 
 </style>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
