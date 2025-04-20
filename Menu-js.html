@@ -20,15 +20,16 @@ var TituloPesquisa = document.getElementById("TituloPesquisa");
 var CorpoPesquisa = document.getElementById("CorpoPesquisa");
 var RodapePesquisa = document.getElementById("RodapePesquisa");
 
+var id_atual="";
+
 ////-----------------------------FUNÇÕES CAIXA DE MENSAGEM-------------------------------////////
 
-var BtnFechar = '<button class = "purple" onclick="Fechar()" style="cursor:pointer">'+
-'<b><font color="black" size="3px">Fechar</font></b></button>';
+var BtnFechar = '<button id="BtnFechar" class = "btn-small waves-effect waves-light purple" onclick="Fechar()">Fechar</button>';
 
-function caixaMsgbox(m){
+function caixaMsgbox(mensagem, titulo="AVISO"){
   CaixaMsg.style.display = "block";
-  TituloMsg.innerHTML = "AVISO";
-  CorpoMsg.innerHTML = m;
+  TituloMsg.innerHTML = titulo;
+  CorpoMsg.innerHTML = mensagem;
   RodapeMsg.innerHTML = BtnFechar;
 }
 
@@ -50,7 +51,42 @@ function Limpar(){
   CampoQuantidade.value="";
   CampoValor.value="";
   M.updateTextFields();
-  CampoLista.value="";
+  id_atual="";
+}
+
+///--------------------------------FUNÇÕES EDITAR--------------------------------------------////
+
+document.getElementById("btnEditar").addEventListener("click", Editar);
+
+function Editar(){
+
+  if(id_atual==""){
+    caixaMsgbox("Algo deu errado, não foi possível concluir a ação de editar.", "ERRO");
+    return;
+  }
+
+  var ID = id_atual;
+  var Nome = CampoNome.value;
+  var Item = CampoItem.value;
+  var Espec = CampoEspec.value;
+  var Motivo = CampoMotivo.value;
+  var Eixo = CampoEixo.value;
+  var Status = CampoStatus.value;
+  var Quantidade = CampoQuantidade.value;
+  var Valor = CampoValor.value;
+  
+  var Dados = { ID: ID,
+                Nome: Nome,
+                Item: Item,
+                Espec: Espec,
+                Motivo: Motivo,
+                Eixo: Eixo,
+                Status: Status,
+                Quantidade: Quantidade,
+                Valor: Valor}
+
+  google.script.run.withSuccessHandler(caixaMsgbox).EditarItem(Dados);
+  return;
 }
 
 //---------------------------------FUNÇÕES ADICIONAR------------------------------------///////
@@ -67,78 +103,57 @@ function Adicionar(){
   var Status = CampoStatus.value;
   var Quantidade = CampoQuantidade.value;
   var Valor = CampoValor.value;
+  Valor = parseFloat(Valor).toFixed(2);
 
   var Nome = Nome.trim();
 
-  if(Nome=="" || Item=="" || Motivo=="" || Quantidade=="" || Valor==""){
+  if(Nome=="" || Item=="" || Motivo=="" || Quantidade=="" || Valor=="" || Eixo=="" || Status==""){
     var m = "Preencha todos os campos obrigatórios.";
     caixaMsgbox(m);
     return;
   }
 
-  var Dados = {
-    Nome: Nome,
-    Item: Item,
-    Espec: Espec,
-    Motivo: Motivo,
-    Eixo: Eixo,
-    Status: Status,
-    Quantidade: Quantidade,
-    Valor: Valor
-  }
+  var Dados = { Nome: Nome,
+                Item: Item,
+                Espec: Espec,
+                Motivo: Motivo,
+                Eixo: Eixo,
+                Status: Status,
+                Quantidade: Quantidade,
+                Valor: Valor}
 
-  google.script.run.withSuccessHandler(Retorno).AdicionarItem(Dados);
-
-  function Retorno(r){
-
-    if(r == "VENDEDOR JÁ CADASTRADO!"){
-      var m = r;
-      caixaMsgbox(m);
-    }
-
-    if(r == "REGISTRADO COM SUCESSO!"){
-      var m = r;
-      caixaMsgbox(m);
-      Limpar();
-    } 
-  }
+  google.script.run.withSuccessHandler(caixaMsgbox).AdicionarItem(Dados);
+  Limpar();
 }
 
-//----------------------------FUNÇÕES CAIXA DE RESULTADOS DE PESQUISA------------------------------------------///
+////--------------------------FUNÇÕES EXCLUIR---------------------------------////
 
-var BtnFechar2 = '<button class = "purple" onclick="Fechar2()" style="cursor:pointer">'+
-'<b><font color="white" size="3px">Fechar</font></b></button>';
+document.getElementById("btnExcluir").addEventListener("click", caixaExcluir);
 
-var BtnSelecionar2 = '<button class = "purple" onclick="Fechar2()" style="cursor:pointer">'+
-'<b><font color="white" size="3px">Selecionar</font></b></button>';
+var BtnSim = '<button id="BtnSim" class = "btn-small waves-effect waves-light purple" onclick="Excluir()">Sim</button>';
+var BtnNao = '<button id="BtnNao" class = "btn-small waves-effect waves-light purple" onclick="FecharExcluir()">Não</button>';
 
-function Fechar2(){
-  CaixaPesquisa.style.display = "none";
-}
-
-function caixaPesquisa(resultados) {
-
-  CaixaPesquisa.style.display = "block";
-  TituloPesquisa.innerHTML = "Resultados da Pesquisa";
-
-  if (resultados.length == 0) {
-    CorpoPesquisa.innerHTML = "<p>Nenhum resultado encontrado.</p>";
-    RodapePesquisa.innerHTML = BtnFechar2+BtnSelecionar2;
+function caixaExcluir(){
+  if(id_atual==""){
+    caixaMsgbox("Algo deu errado, não foi possível concluir a ação de excluir.", "ERRO");
     return;
   }
+  CaixaExcluir.style.display = "block";
+  TituloExcluir.innerHTML = "AVISO";
+  CorpoExcluir.innerHTML = "Tem certeza de que deseja excluir o item selecionado?";
+  RodapeExcluir.innerHTML = BtnNao+BtnSim;
+}
 
-  var listaHTML = '<select class="browser-default" style="border: 1px solid #808080"><option value="" disabled selected>Selecione um dos resultados</option>';
+function FecharExcluir(){
+  CaixaExcluir.style.display = "none";
+}
 
-  for(var i=0; i<resultados.length; i++){
-    var texto='<option>'+resultados[i]+'</option>';
-
-    listaHTML += '<option>'+texto+'</option>';
-  }
-
-  listaHTML += '</select>';
-
-  CorpoPesquisa.innerHTML = listaHTML;
-  RodapePesquisa.innerHTML = BtnFechar2+BtnSelecionar2;
+function Excluir(){
+  google.script.run.withSuccessHandler(caixaMsgbox).ExcluirItem(id_atual);
+  id_atual=="";
+  FecharExcluir();
+  Limpar();
+  return;
 }
 
 ////--------------------------FUNÇÕES PESQUISAR--------------------------------/////
@@ -149,26 +164,98 @@ function Pesquisar(){
   var termo = CampoPesquisa.value;
   google.script.run.withSuccessHandler(caixaPesquisa).buscarItens(termo);
 }
+
+////-----------------------------------BOTÕES E FUNÇÕES CAIXA DE DETALHES-------------------------------///
+
+var BtnFechar3 = '<button id="BtnFechar3" class = "btn-small waves-effect waves-light purple" onclick="Fechar3()">Fechar'+
+                    '<i class = "material-icons left">close</i>'+
+                '</button>';
+
+function Fechar3(){
+  CaixaDetalhes.style.display = "none";
+}
+
+var BtnInfo = '<button id="BtnInfo" class = "btn-small waves-effect waves-light purple" onclick="MostrarInfo()">Detalhes'+
+                  '<i class = "material-icons left">info_outline</i>'+
+              '</button>';
+
+function MostrarInfo(){
+  var select = ListaResultados.value;
+  select = select.split("-");
+  var selectID = select[0].trim();
+  google.script.run.withSuccessHandler(caixaDetalhes).buscarDetalhes(selectID, 1);
+}
+
+function caixaDetalhes(m){
+  CaixaDetalhes.style.display = "block";
+  TituloDetalhes.innerHTML = "Detalhes do Item";
+  CorpoDetalhes.innerHTML = m;
+  RodapeDetalhes.innerHTML = BtnSelecionar+BtnFechar3;
+}
+
+///-------------------------BOTÕES E FUNÇÕES SELECIONAR--------------------------//////////
+
+var BtnSelecionar = '<button id="BtnSelecionar" class = "btn-small waves-effect waves-light purple" onclick="SelecionarItem()">Selecionar'+
+                      '<i class = "material-icons left">check</i>'+
+                    '</button>';
+
+function SelecionarItem(){
+  var select = ListaResultados.value;
+  select = select.split("-");
+  var selectID = select[0].trim();
+  google.script.run.withSuccessHandler(PreencherCampos).buscarDetalhes(selectID, 2);
+  Fechar2();
+  Fechar3();
+}
+
+function PreencherCampos(campos){
+  id_atual=campos.ID;
+  CampoNome.value=campos.Nome;
+  CampoItem.value=campos.Item;
+  CampoEspec.value=campos.Espec;
+  CampoMotivo.value=campos.Motivo;
+  CampoEixo.value=campos.Eixo;
+  CampoStatus.value=campos.Status;
+  CampoQuantidade.value=campos.Qtd;
+  CampoValor.value=campos.Valor;
+  M.updateTextFields();
+}
+
+//----------------------------FUNÇÕES CAIXA DE RESULTADOS DE PESQUISA------------------------------------------///
+
+var BtnFechar2 = '<button id="BtnFechar2" class = "btn-floating waves-effect waves-light purple" onclick="Fechar2()">'+
+                    '<i id="IconeBtnFechar2" class = "tiny material-icons">close</i>'+
+                '</button>';
+
+function Fechar2(){
+  CaixaPesquisa.style.display = "none";
+}
+
+function caixaPesquisa(resultados) {
+
+  CaixaPesquisa.style.display = "block";
+  TituloPesquisa.innerHTML = "Resultados da Pesquisa"+BtnFechar2;
+
+  if (resultados.length == 0) {
+    CorpoPesquisa.innerHTML = "<p>Nenhum resultado encontrado.</p>";
+    RodapePesquisa.innerHTML = BtnSelecionar+BtnInfo;
+    return;
+  }
+
+  var listaHTML = '<select id="ListaResultados" multiple class="browser-default">'+
+                  '<option value="" disabled selected>Selecione um dos resultados</option>';
+
+  for(var i=0; i<resultados.length; i++){
+    var texto = resultados[i];
+    listaHTML += '<option><b>'+texto+'</b></option>';
+  }
+
+  listaHTML += '</select>';
+
+  CorpoPesquisa.innerHTML = listaHTML;
+  RodapePesquisa.innerHTML = BtnSelecionar+BtnInfo;
+}
+
+
   
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
